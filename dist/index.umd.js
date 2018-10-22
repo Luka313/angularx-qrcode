@@ -7,14 +7,14 @@
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@angular/core"));
+		module.exports = factory(require("@angular/core"), require("@angular/common"));
 	else if(typeof define === 'function' && define.amd)
-		define(["@angular/core"], factory);
+		define(["@angular/core", "@angular/common"], factory);
 	else if(typeof exports === 'object')
-		exports["ticktock"] = factory(require("@angular/core"));
+		exports["ticktock"] = factory(require("@angular/core"), require("@angular/common"));
 	else
-		root["ticktock"] = factory(root["ng"]["core"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+		root["ticktock"] = factory(root["ng"]["core"], root["ng"]["common"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_1__, __WEBPACK_EXTERNAL_MODULE_7__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -151,13 +151,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(1);
-var QRCode = __webpack_require__(6);
+var QRCode = undefined;
+var common_1 = __webpack_require__(7);
 var QRCodeComponent = /** @class */ (function () {
-    function QRCodeComponent(el) {
+    function QRCodeComponent(el, platformId) {
         var _this = this;
         this.el = el;
+        this.platformId = platformId;
         /** @internal */
         this.allowEmptyString = false;
         this.colordark = '#000000';
@@ -175,22 +180,32 @@ var QRCodeComponent = /** @class */ (function () {
         };
     }
     QRCodeComponent.prototype.ngOnInit = function () {
-        try {
-            if (!this.isValidQrCodeText(this.qrdata)) {
-                throw new Error('Empty QR Code data');
-            }
-            this.qrcode = new QRCode(this.el.nativeElement, {
-                colorDark: this.colordark,
-                colorLight: this.colorlight,
-                correctLevel: QRCode.CorrectLevel[this.level.toString()],
-                height: this.size,
-                text: this.qrdata || ' ',
-                useSVG: this.usesvg,
-                width: this.size,
-            });
+    };
+    QRCodeComponent.prototype.ngAfterViewInit = function () {
+        if (common_1.isPlatformServer(this.platformId)) {
+            return;
         }
-        catch (e) {
-            console.error('Error generating QR Code: ' + e.message);
+        else {
+            if (!QRCode) {
+                QRCode = __webpack_require__(6);
+            }
+            try {
+                if (!this.isValidQrCodeText(this.qrdata)) {
+                    throw new Error('Empty QR Code data');
+                }
+                this.qrcode = new QRCode(this.el.nativeElement, {
+                    colorDark: this.colordark,
+                    colorLight: this.colorlight,
+                    correctLevel: QRCode.CorrectLevel[this.level.toString()],
+                    height: this.size,
+                    text: this.qrdata || ' ',
+                    useSVG: this.usesvg,
+                    width: this.size,
+                });
+            }
+            catch (e) {
+                console.error('Error generating QR Code: ' + e.message);
+            }
         }
     };
     QRCodeComponent.prototype.ngOnChanges = function (changes) {
@@ -241,7 +256,9 @@ var QRCodeComponent = /** @class */ (function () {
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             template: ''
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef])
+        __param(1, core_1.Inject(core_1.PLATFORM_ID)),
+        __metadata("design:paramtypes", [core_1.ElementRef,
+            Object])
     ], QRCodeComponent);
     return QRCodeComponent;
 }());
@@ -906,6 +923,12 @@ var QRCode;
 	
 }));
 
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_7__;
 
 /***/ })
 /******/ ]);
