@@ -1,11 +1,11 @@
 {
-	"name": "angularx-qrcode",
-	"version": "1.2.4",
+	"name": "integrator-angularx-qrcode",
+	"version": "1.0.0",
 	"author": {
 		"name": "Andreas Jacob <andreas@cordobo.de>",
 		"url": "http://cordobo.com/"
 	},
-	"description": "Ionic 3/4 and Angular4/5/6+ QRCode module generator using qrcodejs",
+	"description": "Ionic 3/4 and Angular4/5/6+ QRCode module generator using qrcodejs. Adapted for Integrator.",
 	"main": "./dist/index.umd.js",
 	"module": "./dist/index.js",
 	"typings": "./dist/index.d.ts",
@@ -30,12 +30,12 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/cordobo/angularx-qrcode.git"
+		"url": "https://github.com/Luka313/angularx-qrcode.git"
 	},
 	"bugs": {
-		"url": "https://github.com/cordobo/angularx-qrcode/issues"
+		"url": "https://github.com/Luka313/angularx-qrcode/issues"
 	},
-	"homepage": "https://github.com/cordobo/angularx-qrcode#readme",
+	"homepage": "https://github.com/Luka313/angularx-qrcode#readme",
 	"scripts": {
 		"build": "npm run build:esm && npm run build:umd",
 		"build:esm": "npm run ngcompile",
@@ -53,9 +53,7 @@
 		"ngcompile": "node_modules/.bin/ngc -p tsconfig-aot.json",
 		"postversion": "git push && git push --tags",
 		"prebuild": "rimraf dist tmp",
-		"prebuild:watch": "rimraf dist tmp",
-		"prepublishOnly": "npm run ci",
-		"preversion": "npm run ci"
+		"prebuild:watch": "rimraf dist tmp"
 	},
 	"dependencies": {
 		"qrcodejs2": "0.0.2"
