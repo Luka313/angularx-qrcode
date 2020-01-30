@@ -1,23 +1,62 @@
 {
-	"name": "integrator-angularx-qrcode",
-	"version": "1.0.0",
+	"$schema": "./node_modules/ng-packagr/package.schema.json",
+	"name": "angularx-qrcode",
+	"version": "2.1.0",
 	"author": {
 		"name": "Andreas Jacob <andreas@cordobo.de>",
 		"url": "http://cordobo.com/"
 	},
-	"description": "Ionic 3/4 and Angular4/5/6+ QRCode module generator using qrcodejs. Adapted for Integrator.",
-	"main": "./dist/index.umd.js",
-	"module": "./dist/index.js",
-	"typings": "./dist/index.d.ts",
+	"description": "Simple QRCode module generator for Angular4/5/6/7/8/9+ and Ionic 3/4 using node-qrcode",
 	"license": "MIT",
+	"scripts": {
+		"build": "ng-packagr -p ng-package.json",
+		"lint": "tslint 'src/**/*.ts' --fix",
+		"prebuild": "rimraf dist tmp",
+		"reinstall": "rm -rf node_modules && npm install",
+		"release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../"
+	},
+	"dependencies": {
+		"@angular/common": "9.0.0-rc.11",
+		"qrcode": "1.4.2"
+	},
+	"peerDependencies": {
+		"@angular/common": ">= 5.0.0 < 9.1.0",
+		"@angular/core": ">= 5.0.0 < 9.1.0"
+	},
+	"devDependencies": {
+		"@angular-devkit/build-angular": "0.803.21",
+		"@angular-devkit/build-ng-packagr": "0.803.21",
+		"@angular/cli": "8.3.21",
+		"@angular/compiler": "8.2.14",
+		"@angular/compiler-cli": "8.2.14",
+		"@angular/core": "8.2.14",
+		"@angular/language-service": "8.2.14",
+		"@angular/platform-browser": "8.2.14",
+		"@angular/platform-browser-dynamic": "8.2.14",
+		"@types/node": "8.9.4",
+		"@types/qrcode": "1.3.4",
+		"codelyzer": "5.2.1",
+		"ng-packagr": "5.7.1",
+		"rimraf": "3.0.0",
+		"rxjs": "6.4.0",
+		"ts-node": "8.5.4",
+		"tslib": "1.10.0",
+		"tslint": "5.20.1",
+		"typescript": "~3.5.3",
+		"zone.js": "0.10.2"
+	},
 	"keywords": [
 		"angularx-qrcode",
 		"angular-qrcode",
 		"ng-qrcode",
+		"ngx-qrcode",
 		"angular",
+		"angular4",
 		"angular5",
 		"angular6",
-		"angular6.1",
+		"angular7",
+		"angular8",
+		"angular9",
 		"ionic",
 		"ionic3",
 		"ionic4",
@@ -30,69 +69,10 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Luka313/angularx-qrcode.git"
+		"url": "https://github.com/cordobo/angularx-qrcode.git"
 	},
 	"bugs": {
-		"url": "https://github.com/Luka313/angularx-qrcode/issues"
+		"url": "https://github.com/cordobo/angularx-qrcode/issues"
 	},
-	"homepage": "https://github.com/Luka313/angularx-qrcode#readme",
-	"scripts": {
-		"build": "npm run build:esm && npm run build:umd",
-		"build:esm": "npm run ngcompile",
-		"build:esm:watch": "gulp build:esm:watch",
-		"build:umd": "webpack --config webpack-umd.config.ts",
-		"build:umd:watch": "npm run build:umd -- --watch",
-		"build:watch": "concurrently --raw \"npm run build:umd:watch\" \"npm run build:esm:watch\"",
-		"ci": "npm run lint && npm run build && npm run docs",
-		"ci_fix": "npm run lint && npm run build && npm run docs",
-		"clean:all": "npm run clean:tmp && rimraf node_modules",
-		"clean:tmp": "rimraf coverage dist tmp docs",
-		"docs": "compodoc -p tsconfig.json -d docs --disableCoverage --disablePrivate --disableInternal",
-		"explorer": "source-map-explorer ./dist/index.umd.js",
-		"lint": "tslint 'src/**/*.ts'",
-		"ngcompile": "node_modules/.bin/ngc -p tsconfig-aot.json",
-		"postversion": "git push && git push --tags",
-		"prebuild": "rimraf dist tmp",
-		"prebuild:watch": "rimraf dist tmp"
-	},
-	"dependencies": {
-		"qrcodejs2": "0.0.2"
-	},
-	"peerDependencies": {
-		"@angular/common": "^6.0.0",
-		"@angular/core": "^6.0.0"
-	},
-	"devDependencies": {
-		"@angular/cli": "^6.0.0",
-		"@angular/common": "^6.0.0",
-		"@angular/compiler": "^6.0.0",
-		"@angular/compiler-cli": "^6.0.0",
-		"@angular/core": "^6.0.0",
-		"@angular/platform-browser": "^6.0.0",
-		"@angular/platform-browser-dynamic": "^6.0.0",
-		"@compodoc/compodoc": "^1.0.0-beta.9",
-		"@types/node": "^7.0.18",
-		"@types/tapable": "^0.2.5",
-		"@types/webpack": "^2.2.15",
-		"@types/webpack-env": "^1.13.0",
-		"angular2-template-loader": "^0.6.2",
-		"awesome-typescript-loader": "^3.1.3",
-		"codelyzer": "^4.3.0",
-		"concurrently": "^3.4.0",
-		"gulp": "^3.9.1",
-		"gulp-inline-ng2-template": "5.0.1",
-		"json-loader": "^0.5.4",
-		"raw-loader": "^0.5.1",
-		"rimraf": "2.6.1",
-		"rxjs": "^6.0.0",
-		"rxjs-tslint": "^0.1.5",
-		"source-map-explorer": "^1.3.3",
-		"ts-node": "^3.0.4",
-		"tslint": "^5.9.1",
-		"typescript": "^2.9.0",
-		"webpack": "^2.5.1",
-		"webpack-angular-externals": "^1.0.2",
-		"webpack-rxjs-externals": "^1.0.0",
-		"zone.js": "^0.8.10"
-	}
+	"homepage": "https://github.com/cordobo/angularx-qrcode#readme"
 }
